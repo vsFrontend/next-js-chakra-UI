@@ -11,13 +11,15 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
-import { auth } from "../../firebaseconfig";
+import { useFireBaseAuth } from "../context/firebaseContext";
+import { toastActions } from "./toast";
 
 function UserAvatarLogin() {
-  const [user, loading] = useAuthState(auth);
+  const { authUser: user, loading, signOut } = useFireBaseAuth();
 
   const handleLogout = () => {
-    auth.signOut();
+    signOut();
+    toastActions.success("Sucessfully Loged Out");
   };
 
   if (loading) {

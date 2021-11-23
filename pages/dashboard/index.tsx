@@ -6,16 +6,21 @@ import { Container, Heading, Stack, Text } from "@chakra-ui/layout";
 import Layout from "../../src/layouts/layout";
 import AirlineTable from "../../src/components/dashboard/airlineTable";
 import { ApiResponseType, UserDataType } from "../../src/types/userData";
-import { auth } from "../../firebaseconfig";
 import LoadingSpinner from "../../src/components/loadingSpinner";
 import PaginationWrapper from "../../src/hoc/PaginationWrapper";
+import { useFireBaseAuth } from "../../src/context/firebaseContext";
+import { toastActions } from "../../src/components/toast";
 
 function dashboard() {
-  const [user, loading] = useAuthState(auth);
+  const { authUser: user, loading } = useFireBaseAuth();
 
-  if (!user && !loading) {
-    Router.push("/");
-  }
+  useEffect(() => {
+    if (!user && !loading) {
+      toastActions.error("Please Login");
+      Router.push("/");
+    }
+  }, [user]);
+
   const [userData, setUserData] = useState<UserDataType[]>([]);
   const [loadingData, setLoadingData] = useState<Boolean>(false);
   const [totalPages, setTotalPages] = useState<number>(0);

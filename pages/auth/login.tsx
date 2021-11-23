@@ -8,19 +8,25 @@ import {
   Text,
   Center,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
+
 import Router from "next/router";
 import { FcGoogle } from "react-icons/fc";
-import { auth, googleProvider } from "../../firebaseconfig";
+import { toastActions } from "../../src/components/toast";
+import { useFireBaseAuth } from "../../src/context/firebaseContext";
 
 export default function SimpleCard() {
-  const signInWithGoogle = async () => {
-    try {
-      await auth.signInWithPopup(googleProvider);
-      Router.push("/");
-    } catch (error) {
-      console.log(JSON.stringify(error));
-    }
+  const { signInWithGoogle, loading } = useFireBaseAuth();
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then(() => {
+        toastActions.success("Welcome :)");
+        Router.push("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   return (
@@ -50,10 +56,10 @@ export default function SimpleCard() {
                 maxW={"md"}
                 variant={"outline"}
                 leftIcon={<FcGoogle />}
-                onClick={signInWithGoogle}
+                onClick={handleGoogleSignIn}
               >
                 <Center>
-                  <Text>Login with Google</Text>
+                  <Text>Login with Google</Text> {loading && <Spinner />}
                 </Center>
               </Button>
             </Stack>

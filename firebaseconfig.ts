@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { Auth } from "firebase/auth";
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_apiKey,
   authDomain: process.env.NEXT_PUBLIC_authDomain,
@@ -11,16 +11,12 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_appId,
   measurementId: process.env.NEXT_PUBLIC_measurementId,
 };
-const settings = {
-  timestampsInSnapshots: true,
-  experimentalForceLongPolling: true,
-};
 
-const app = firebase.initializeApp(firebaseConfig);
-const auth: any = app.auth();
-const db = app.firestore();
-db.settings(settings);
+// if a Firebase instance doesn't exist, create one
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { auth, db, googleProvider, firebase };
+export default firebase;

@@ -59,6 +59,9 @@ img {
   list-style: none;
 }
 
+.pagination li.page-item {
+  margin-top: 30 px;
+}
 .page-item a {
   box-shadow: 2px 2px #ebebeb;
   padding: 12px;

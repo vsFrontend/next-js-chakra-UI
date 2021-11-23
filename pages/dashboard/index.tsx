@@ -13,14 +13,13 @@ import PaginationWrapper from "../../src/hoc/PaginationWrapper";
 function dashboard() {
   const [user, loading] = useAuthState(auth);
 
+  if (!user && !loading) {
+    Router.push("/");
+  }
   const [userData, setUserData] = useState<UserDataType[]>([]);
   const [loadingData, setLoadingData] = useState<Boolean>(false);
   const [totalPages, setTotalPages] = useState<number>(0);
-  useEffect(() => {
-    if (!user && !loading) {
-      Router.push("/");
-    }
-  }, [user]);
+
   useEffect(() => {
     getUsersData({ page: 0 });
   }, []);

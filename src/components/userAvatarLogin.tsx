@@ -23,7 +23,7 @@ function UserAvatarLogin() {
   if (loading) {
     return <Spinner color="green.500" />;
   }
-  
+
   if (!user) {
     return (
       <Link href={"/auth/login"}>

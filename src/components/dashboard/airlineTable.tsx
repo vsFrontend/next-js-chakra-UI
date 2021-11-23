@@ -6,7 +6,7 @@ function AirlineTable({ data }: { data: UserDataType[] }) {
   return (
     <Flex mx={[3]} wrap="wrap" justifyContent="space-around">
       {data.map((single) => {
-        return <PassangerCard user={single} />;
+        return <PassangerCard key={single._id} user={single} />;
       })}
     </Flex>
   );

@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-
+import { Auth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_apiKey,
   authDomain: process.env.NEXT_PUBLIC_authDomain,
@@ -17,7 +17,7 @@ const settings = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
-const auth = app.auth();
+const auth: any = app.auth();
 const db = app.firestore();
 db.settings(settings);
 
